@@ -6,7 +6,10 @@ public class CraftedLinkedList<E> {
     private int size = 0;
     private MyNode<E> first;
     private MyNode<E> last;
-
+    /**
+     * Внутренний класс, представляющий узел в связанном списке.
+     * @param <T> тип данных, хранящихся в узле
+     */
     private class MyNode<T> {
         T data;
         MyNode<T> next;
@@ -18,7 +21,11 @@ public class CraftedLinkedList<E> {
             this.prev = prev;
         }
     }
-
+    /**
+     * Добавляет элемент в начало списка.
+     *
+     * @param e элемент для добавления
+     */
     public void addFirst(E e) {
         final MyNode<E> f = first;
         final MyNode<E> newNode = new MyNode<>(null, e, f);
@@ -31,7 +38,11 @@ public class CraftedLinkedList<E> {
         }
         size++;
     }
-
+    /**
+     * Добавляет элемент в конец списка.
+     *
+     * @param e элемент для добавления
+     */
     public void addLast(E e) {
         final MyNode<E> l = last;
         final MyNode<E> newNode = new MyNode<>(l, e, null);
@@ -44,7 +55,12 @@ public class CraftedLinkedList<E> {
         }
         size++;
     }
-
+    /**
+     * Удаляет и возвращает первый элемент из списка.
+     *
+     * @return первый элемент списка
+     * @throws NoSuchElementException если список пуст
+     */
     public E removeFirst() {
         if (first == null) {
             throw new NoSuchElementException("List is empty");
@@ -65,7 +81,12 @@ public class CraftedLinkedList<E> {
         oldFirst.prev = null;
         return element;
     }
-
+    /**
+     * Удаляет и возвращает последний элемент из списка.
+     *
+     * @return последний элемент списка
+     * @throws NoSuchElementException если список пуст
+     */
     public E removeLast() {
         if (last == null) {
             throw new NoSuchElementException("List is empty");
@@ -84,17 +105,36 @@ public class CraftedLinkedList<E> {
         size--;
         return element;
     }
-
+    /**
+     * Возвращает элемент, находящийся по указанному индексу.
+     *
+     * @param index индекс элемента, который нужно вернуть
+     * @return элемент, находящийся по указанному индексу
+     * @throws IndexOutOfBoundsException если индекс выходит за границы списка
+     */
     public E get(int index) {
         checkElementIndex(index);
         return node(index).data;
     }
-
+    /**
+     * Заменяет элемент по указанному индексу на указанный элемент.
+     *
+     * @param index индекс заменяемого элемента
+     * @param element элемент, который будет установлен
+     * @throws IndexOutOfBoundsException если индекс выходит за границы списка
+     */
     public void set(int index, E element) {
         checkElementIndex(index);
         node(index).data = element;
     }
-
+    /**
+     * Возвращает часть списка от указанного начального индекса (включительно) до конечного индекса (исключительно).
+     *
+     * @param fromIndex начальный индекс (включительно)
+     * @param toIndex конечный индекс (исключительно)
+     * @return новый список, содержащий элементы из указанного диапазона
+     * @throws IndexOutOfBoundsException если индексы выходят за границы списка
+     */
     public List<E> subList(int fromIndex, int toIndex) {
         if (fromIndex < 0 || toIndex > size || fromIndex > toIndex) {
             throw new IndexOutOfBoundsException();
@@ -106,11 +146,17 @@ public class CraftedLinkedList<E> {
         }
         return subList;
     }
-
+    /**
+     * Возвращает количество элементов в списке.
+     *
+     * @return количество элементов в списке
+     */
     public int size() {
         return size;
     }
-
+    /**
+     * Очищает список, удаляя все элементы.
+     */
     public void clear() {
         MyNode<E> current = first;
         while (current != null) {
@@ -123,7 +169,12 @@ public class CraftedLinkedList<E> {
         first = last = null;
         size = 0;
     }
-
+    /**
+     * Возвращает узел, находящийся по указанному индексу.
+     *
+     * @param index индекс узла
+     * @return узел, находящийся по указанному индексу
+     */
     private MyNode<E> node(int index) {
         if (index < (size >> 1)) {
             MyNode<E> x = first;
@@ -139,7 +190,12 @@ public class CraftedLinkedList<E> {
             return x;
         }
     }
-
+    /**
+     * Проверяет, находится ли индекс в допустимом диапазоне.
+     *
+     * @param index индекс для проверки
+     * @throws IndexOutOfBoundsException если индекс выходит за границы списка
+     */
     private void checkElementIndex(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
